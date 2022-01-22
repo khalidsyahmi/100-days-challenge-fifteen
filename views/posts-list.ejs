@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('includes/head', { title: 'All Posts' }) %>
+    <link rel="stylesheet" href="/styles/posts.css" />
+  </head>
+
+  <body>
+    <%- include('includes/header') %>
+    <main id="all-posts">
+      <h1>All Posts</h1>
+
+      <% if( !postKey || postKey ===0){ %>
+      <p>No post found!</p>
+      <p>
+        Tap this link to create a new post
+        <a href="/new-post" class="btn">Create new post</a>
+      </p>
+      <% } else {%>
+      <ol id="post-list">
+        <!-- expose individual post in postItem -->
+        <% for(const post of postKey) { %>
+        <li><%- include('includes/post-item',{postItem:post}) %></li>
+        <% } %>
+      </ol>
+      <% } %>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('includes/head', { title: postsKey.title }) %>
+    <link rel="stylesheet" href="/styles/posts.css" />
+  </head>
+
+  <body>
+    <%- include('includes/header') %>
+    <main id="post-detail">
+      <h1><%= postsKey.title %></h1>
+      <section id="post-meta">
+        <address>
+          <a href="mailto:<%= postsKey.author_email %>"
+            ><%= postsKey.author_name %></a
+          >
+        </address>
+        |
+        <!-- machine and human readable date -->
+        <!-- trnsformed date -->
+        <time time="<%= postsKey.date %>">
+          <%= postsKey.humanReadableDate %>
+        </time>
+      </section>
+      <hr />
+      <section>
+        <p id="body"><%= postsKey.body %></p>
+      </section>
+    </main>
+  </body>
+</html>

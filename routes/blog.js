@@ -50,9 +50,19 @@ router.get("/posts/:id", async function (req, res) {
       day: "numeric",
     }),
   };
-
   //don't forget to change the parameter
   res.render("post-detail", { postsKey: copyPosts }); //single post //array=[0] metadata=[1]
+});
+
+// dynamic link 2
+router.get("/posts/:id/edit", async function (req, res) {
+  // authors not needed to display here
+  const query = `
+  SELECT * FROM posts WHERE id = ?
+  `;
+  const [posts] = await db.query(query, [req.params.id]);
+
+  res.render("update-post", { editKey: posts[0] });
 });
 
 //handling post requests
@@ -67,6 +77,38 @@ router.post("/posts", async function (req, res) {
     "INSERT INTO posts (title, summary, body, author_id) VALUES (?)",
     [data]
   );
+
+  res.redirect("/posts");
+});
+
+//POST request 2 //post-edit
+router.post("/posts/:id/edit", async function (req, res) {
+  /*   const data = [
+    req.body.title,
+    req.body.summary,
+    req.body.content,
+    req.params.id,
+  ];
+ */
+  const query = `
+  UPDATE posts SET title = ?, summary = ?, body = ?
+  WHERE id = ?
+  `;
+  // idk why but metadata fucks with everything
+  await db.query(query, [
+    req.body.title,
+    req.body.summary,
+    req.body.content,
+    req.params.id,
+  ]);
+
+  res.redirect("/posts");
+});
+
+//delete request
+router.post("/posts/:idDelete/delete", async function (req, res) {
+  await db.query("DELETE FROM posts WHERE id = ?", [req.params.idDelete]);
+
   res.redirect("/posts");
 });
 

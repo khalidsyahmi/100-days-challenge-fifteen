@@ -3,8 +3,12 @@
   <p class="post-item-author">By <%= postItem.author_name %></p>
   <p><%= postItem.summary %></p>
   <div class="post-actions">
-    <button class="btn btn-alt">Delete Post</button>
-    <a href="...">Edit Post</a>
+    <!-- retrieve dynamic data -->
+    <form action="/posts/<%= postItem.id %>/delete" method="POST">
+      <button class="btn btn-alt">Delete Post</button>
+    </form>
+
+    <a href="/posts/<%= postItem.id %>/edit">Edit Post</a>
     <a class="btn" href="/posts/<%= postItem.id %>">View Post</a>
     <!-- href auto targeted by ejs if defined in routes -->
   </div>
